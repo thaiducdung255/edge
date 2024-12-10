@@ -60,8 +60,8 @@ endif
 call edge#highlight('SignColumn', s:palette.fg, s:palette.none)
 call edge#highlight('FoldColumn', s:palette.grey_dim, s:palette.none)
 if has('nvim')
-  call edge#highlight('IncSearch', s:palette.bg0, s:palette.bg_blue)
-  call edge#highlight('Search', s:palette.bg0, s:palette.bg_green)
+  call edge#highlight('IncSearch', s:palette.bg0, s:palette.bg_grey)
+  call edge#highlight('Search', s:palette.bg0, s:palette.bg_blue)
 else
   call edge#highlight('IncSearch', s:palette.bg_blue, s:palette.bg0, 'reverse')
   call edge#highlight('Search', s:palette.bg_green, s:palette.bg0, 'reverse')
@@ -82,7 +82,7 @@ if &diff
   call edge#highlight('CursorLine', s:palette.none, s:palette.none, 'underline')
   call edge#highlight('CursorColumn', s:palette.none, s:palette.none, 'bold')
 else
-  call edge#highlight('CursorLine', s:palette.none, s:palette.bg1)
+  call edge#highlight('CursorLine', s:palette.none, s:palette.black)
   call edge#highlight('CursorColumn', s:palette.none, s:palette.bg1)
 endif
 call edge#highlight('LineNr', s:palette.grey_dim, s:palette.none)
@@ -112,7 +112,7 @@ if has('nvim')
 else
   call edge#highlight('SpecialKey', s:palette.bg4, s:palette.none)
 endif
-call edge#highlight('Pmenu', s:palette.fg, s:palette.bg2)
+call edge#highlight('Pmenu', s:palette.bg_grey, s:palette.bg0)
 call edge#highlight('PmenuSbar', s:palette.none, s:palette.bg2)
 if s:configuration.menu_selection_background ==# 'blue'
   call edge#highlight('PmenuSel', s:palette.bg0, s:palette.bg_blue)
@@ -127,11 +127,11 @@ highlight! link WildMenu PmenuSel
 call edge#highlight('PmenuThumb', s:palette.none, s:palette.bg_grey)
 if s:configuration.float_style ==# 'dim'
   call edge#highlight('NormalFloat', s:palette.fg, s:palette.bg_dim)
-  call edge#highlight('FloatBorder', s:palette.grey, s:palette.bg_dim)
+  call edge#highlight('FloatBorder', s:palette.grey, s:palette.bg0)
   call edge#highlight('FloatTitle', s:palette.purple, s:palette.bg_dim, 'bold')
 else
   call edge#highlight('NormalFloat', s:palette.fg, s:palette.bg2)
-  call edge#highlight('FloatBorder', s:palette.grey, s:palette.bg2)
+  call edge#highlight('FloatBorder', s:palette.grey, s:palette.bg0)
   call edge#highlight('FloatTitle', s:palette.purple, s:palette.bg2, 'bold')
 endif
 call edge#highlight('Question', s:palette.yellow, s:palette.none)
@@ -331,15 +331,15 @@ call edge#highlight('CyanSign', s:palette.cyan, s:palette.none)
 call edge#highlight('BlueSign', s:palette.blue, s:palette.none)
 call edge#highlight('PurpleSign', s:palette.purple, s:palette.none)
 if s:configuration.diagnostic_text_highlight
-  call edge#highlight('ErrorText', s:palette.none, s:palette.diff_red, 'undercurl', s:palette.red)
-  call edge#highlight('WarningText', s:palette.none, s:palette.diff_yellow, 'undercurl', s:palette.yellow)
-  call edge#highlight('InfoText', s:palette.none, s:palette.diff_blue, 'undercurl', s:palette.blue)
-  call edge#highlight('HintText', s:palette.none, s:palette.diff_green, 'undercurl', s:palette.green)
+  call edge#highlight('ErrorText', s:palette.none, s:palette.diff_red, 'underline', s:palette.red)
+  call edge#highlight('WarningText', s:palette.none, s:palette.diff_yellow, 'underline', s:palette.yellow)
+  call edge#highlight('InfoText', s:palette.none, s:palette.diff_blue, 'underline', s:palette.blue)
+  call edge#highlight('HintText', s:palette.none, s:palette.diff_green, 'underline', s:palette.green)
 else
-  call edge#highlight('ErrorText', s:palette.none, s:palette.none, 'undercurl', s:palette.red)
-  call edge#highlight('WarningText', s:palette.none, s:palette.none, 'undercurl', s:palette.yellow)
-  call edge#highlight('InfoText', s:palette.none, s:palette.none, 'undercurl', s:palette.blue)
-  call edge#highlight('HintText', s:palette.none, s:palette.none, 'undercurl', s:palette.green)
+  call edge#highlight('ErrorText', s:palette.none, s:palette.none, 'underline', s:palette.red)
+  call edge#highlight('WarningText', s:palette.none, s:palette.none, 'underline', s:palette.yellow)
+  call edge#highlight('InfoText', s:palette.none, s:palette.none, 'underline', s:palette.blue)
+  call edge#highlight('HintText', s:palette.none, s:palette.none, 'underline', s:palette.green)
 endif
 if s:configuration.diagnostic_line_highlight
   call edge#highlight('ErrorLine', s:palette.none, s:palette.diff_red)
@@ -373,13 +373,13 @@ call edge#highlight('WarningFloat', s:palette.yellow, s:palette.none)
 call edge#highlight('InfoFloat', s:palette.blue, s:palette.none)
 call edge#highlight('HintFloat', s:palette.green, s:palette.none)
 if &diff
-  call edge#highlight('CurrentWord', s:palette.bg0, s:palette.green)
+  call edge#highlight('CurrentWord', s:palette.bg0, s:palette.green, 'standout')
 elseif s:configuration.current_word ==# 'grey background'
-  call edge#highlight('CurrentWord', s:palette.none, s:palette.bg2)
+  call edge#highlight('CurrentWord', s:palette.none, s:palette.bg2, 'standout')
 elseif s:configuration.current_word ==# 'high contrast background'
-  call edge#highlight('CurrentWord', s:palette.none, s:palette.bg4)
+  call edge#highlight('CurrentWord', s:palette.none, s:palette.bg4, 'standout')
 else
-  call edge#highlight('CurrentWord', s:palette.none, s:palette.none, s:configuration.current_word)
+  call edge#highlight('CurrentWord', s:palette.none, s:palette.none, 'standout')
 endif
 if s:configuration.inlay_hints_background ==# 'none'
   highlight! link InlayHints LineNr
@@ -1570,12 +1570,12 @@ highlight! link DirvishArg Green
 " syn_end }}}
 " syn_begin: NvimTree {{{
 " https://github.com/kyazdani42/nvim-tree.lua
-if !s:configuration.transparent_background
-  call edge#highlight('NvimTreeNormal', s:palette.fg, s:palette.bg_dim)
-  call edge#highlight('NvimTreeEndOfBuffer', s:palette.bg_dim, s:palette.bg_dim)
-  call edge#highlight('NvimTreeVertSplit', s:palette.bg0, s:palette.bg0)
-  call edge#highlight('NvimTreeCursorLine', s:palette.none, s:palette.bg0)
-endif
+"
+" call edge#highlight('NvimTreeNormal', s:palette.bg0, s:palette.bg0)
+" call edge#highlight('NvimTreeEndOfBuffer', s:palette.bg0, s:palette.bg0)
+" call edge#highlight('NvimTreeVertSplit', s:palette.bg0, s:palette.bg0)
+" call edge#highlight('NvimTreeCursorLine', s:palette.bg0, s:palette.bg0)
+
 highlight! link NvimTreeSymlink Fg
 highlight! link NvimTreeFolderName Green
 highlight! link NvimTreeRootFolder Grey
